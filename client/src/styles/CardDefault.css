@@ -1,0 +1,9 @@
+@media (max-width:768px){
+    .add-btn{
+        padding: 4px 8px !important;
+    }
+    .head-text{
+        font-size: 1rem !important;
+        line-height: 1rem !important;
+    }
+}

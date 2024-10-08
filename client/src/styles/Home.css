@@ -1,0 +1,108 @@
+.tendor{
+    width:100%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.add-btns{
+    padding: 30px 50px;
+    border-radius: 18px;
+    background-color: blue;
+    font-size: 1rem;
+}
+
+.card{
+    margin: 15px;
+    height: 350px;
+    border: 1px solid #3b3b5d;
+    border-radius: 10px;
+}
+.header{
+    /* margin: 13px; */
+    font-size: 1.2rem;
+    font-style: oblique;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 10px 10px 0px 0;
+    /* background: #eb5215; */
+}
+
+.card-reader{
+    display: flex;
+   
+    gap:8px;
+    flex-wrap:wrap;
+    width: 100%;
+}
+
+.tendor-container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 80%;
+    margin:0 10px;
+}
+
+.all-tendors{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+.tendor-header{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+}
+
+/* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+.tendor-container::-webkit-scrollbar {
+    width: 0; /* Hide scrollbar width */
+    height: 0; /* Hide scrollbar height */
+}
+
+.tendor-container::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Hide the thumb */
+    border-radius: 10px;
+}
+
+.tendor-container::-webkit-scrollbar-track {
+    background-color: transparent; /* Hide the track */
+    border-radius: 10px;
+}
+
+/* Hide scrollbar for Firefox */
+.tendor-container {
+    scrollbar-width: none; /* Hide scrollbar */
+}
+
+
+@media (max-width:768px) {
+    .main-container{
+        margin:10px !important;
+    }
+    .add-icon{
+        font-size: 1.2rem !important;
+    }
+
+    .add-btns{
+        padding: 10px 20px !important;
+    }
+    .header{
+        font-size: 1rem !important;
+    }
+
+    .header-tag{
+        font-size: 1.2rem !important;
+    }
+
+    .shared-post{
+        padding: 0 !important;
+    }
+}

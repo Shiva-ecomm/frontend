@@ -1,0 +1,316 @@
+/* Main container styles */
+.main-post {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    padding: 20px;
+}
+
+.blank-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+/* Post container styles */
+.post-container {
+    width: 100%;
+    max-width: 800px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    z-index: 9999999;
+}
+
+
+
+/* Header styles */
+.post-header {
+    background: linear-gradient(135deg, #6e45e2, #88d3ce);
+    padding: 20px;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.post-title {
+    font-size: 2rem;
+    font-weight: bold;
+    background: transparent;
+    -webkit-background-clip: text;
+    color: white;
+    background: transparent
+}
+
+/* Content area styles */
+.post-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width:45%;
+}
+
+/* Input group styles */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Input and textarea styles */
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: #6e45e2;
+    box-shadow: 0 0 0 3px rgba(110, 77, 226, 0.2);
+    outline: none;
+}
+
+/* Label styles */
+.input-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+/* File input styles */
+.file-input {
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Image preview styles */
+.image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.image-thumbnail {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.image-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.remove-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #d9534f;
+}
+
+/* Layout styles */
+.post-divider {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0 30px;
+}
+
+.party-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width:45%;
+
+}
+
+/* Share component styles */
+.share {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.tags {
+    display: flex;
+    gap: 10px;
+}
+
+.sub-tags {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 60px;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* .sub-tags input {
+    display: none;
+} */
+
+.sub-tags i {
+    font-size: 1.2rem;
+}
+
+/* Button styles */
+.add-btn {
+    background: #6e45e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.add-btn:hover {
+    background: #5a39c0;
+}
+
+.add-btn:active {
+    transform: scale(0.98);
+}
+
+.party-manage{
+    display: flex;
+    justify-content: space-around;
+    width: 506px;
+
+}
+
+.sub-party{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.table-padding{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.table-text{
+    font-size: 0.7rem;
+    line-height: 0.8rem;
+}
+
+/* Button styles */
+.add-btn,
+.select-all-btn {
+    background-color: #6e45e2;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.add-btn:hover:not(:disabled),
+.select-all-btn:hover {
+    background-color: #5e35b1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .post-divider {
+        flex-direction: column;
+        margin:0 15px !important;
+    }
+    .post-content{
+        width:100%
+    }
+    .party-content {
+        width: 100%;
+    }
+    
+    .image-thumbnail {
+        width: 100px;
+        height: 100px;
+    }
+
+    .share {
+        /* flex-direction: column;
+        align-items: flex-start; */
+    }
+
+    .tags {
+        flex-direction: column;
+    }
+
+    table{
+        font-size: 0.7rem;
+    }
+
+    .add-btn{
+        width:90px !important;
+        font-size: 0.6rem !important;
+        height: 30px;
+        margin: 5px;
+
+    }
+
+    .party-table-container{
+        width: 75% !important;
+    }
+    
+}

@@ -8,16 +8,17 @@ import axios from 'axios';
 import host from '../APIRoute/host';
 import FormatDate from '../helpers/FormatDate';
 import FormatCurrency from '../helpers/FormatCurrency';
-import '../styles/TendorDetails.css';
 import { useSelector } from 'react-redux';
+import { ClipLoader } from 'react-spinners';
+import { FaCalendarAlt } from 'react-icons/fa'; // Icon for calendar
 
 const TendorInfo = () => {
   const { id } = useParams();
   const [tendor, setTendor] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const navigate=useNavigate()
-  const {user}=useSelector((state)=>state.user)
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
 
   const getTendorDetails = async () => {
     setLoading(true);
@@ -29,58 +30,50 @@ const TendorInfo = () => {
       });
       if (data.success) {
         setTendor(data.tendor);
-        // setQuotation(data.quotations);
-        // highestBid(data.quotations);
       }
     } catch (err) {
-      // console.error(err.message);
       message.error('Something went wrong');
       setError('Failed to fetch tender details.');
     } finally {
       setLoading(false);
     }
   };
-  useEffect(()=>{
-    if(!localStorage.getItem('token')){
-      navigate('/login')
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      navigate('/login');
     }
-  },[user,navigate])
-  
+  }, [user, navigate]);
 
   useEffect(() => {
     getTendorDetails();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="flex justify-center"><ClipLoader /></div>;
   if (error) return <div>{error}</div>;
 
- 
-
   return (
-    <>
+    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen">
       <Header />
-      <main className="py-8 mx-auto">
+      <main className="py-8 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:space-x-8 space-y-8 lg:space-y-0">
-          <div className="flex-1 bg-white p-6 rounded-lg shadow-md main-container">
+          <div className="flex-1 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md main-container">
             <Post slides={tendor?.images} tendor={tendor} />
             <div className="mt-6">
-              <div className="text-lg font-semibold">
-                  <span>The tender will close on </span>
-                
-                <span className="font-bold">{FormatDate(tendor?.closesOn)}</span>
+              <div className="flex items-center text-lg font-semibold text-gray-800 dark:text-gray-200">
+                <FaCalendarAlt className="text-blue-500 dark:text-blue-400 mr-2" />
+                <span>The tender will close on </span>
+                <span className="font-bold ml-2">{FormatDate(tendor?.closesOn)}</span>
               </div>
-              <div className="mt-4 text-base">
-              
-              
+              <div className="mt-4 text-base text-gray-700 dark:text-gray-300">
+                {/* Add more information here if needed */}
               </div>
             </div>
           </div>
-
-        
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

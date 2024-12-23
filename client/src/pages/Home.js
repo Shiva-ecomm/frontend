@@ -1,127 +1,156 @@
-import React, { useEffect,useState } from 'react';
-import Header from '../components/Header';
-import '../styles/Home.css';
-import { TERipple } from "tw-elements-react";
-import CardDefault from '../components/CardDefault';
-import Footer from '../components/Footer';
-import { Link,useNavigate } from 'react-router-dom';
-import { message } from 'antd';
-import host from '../APIRoute/host';
-import axios from 'axios';
-import Loader from '../components/Loader';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { FaPlus } from "react-icons/fa";
+import { message } from "antd";
+import axios from "axios";
+import host from "../APIRoute/host";
+import CardDefault from "../components/CardDefault";
 
 const Home = () => {
-  const [tendors,setTendors]=useState([]);
-  const {user}=useSelector((state)=>state.user)
-  const navigate=useNavigate()
+  const [tenders, setTenders] = useState([]);
+  const { user } = useSelector((state) => state.user);
+  const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate();
+  const currentDate = Date.now();
 
-  const getTendors=async()=>{
-    try{
-      const res=await axios.get(`${host}/tendor/get-tendors`,{
-        headers:{
-          Authorization:`Bearer ${localStorage.getItem('token')}`
-        }
+  // Fetch tenders
+  const fetchTenders = async () => {
+    try {
+      const res = await axios.get(`${host}/tendor/get-tendors`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       });
-      if(res.data.success){
-        // message.success(res.data.success)
-        setTendors(res.data.tendors)
-        // console.log(res.data)
+      if (res.data.success) {
+        setTenders(res.data.tendors);
       }
-    }catch(error){
-      // console.error(error.message);
-      // message.error('Something went wrong')
-      
+    } catch (error) {
+      message.error("Something went wrong while fetching tenders.");
     }
-  }
+  };
 
-
-
-
-  const currentDate=Date.now();
-
-  useEffect(()=>{
-    if(!localStorage.getItem('token')){
-      navigate('/login')
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
     }
-  },[user,navigate])
+  }, [navigate]);
 
-  useEffect(()=>{
-    getTendors();
-  },[CardDefault])
+  useEffect(() => {
+    fetchTenders();
+  }, []);
 
   return (
-    <div>
-      {/* <Post/> */}
-      <Header />
-      
-      <div className='m-20 mt-5'>
-        {user?.isAdmin && 
-        <div className='tendor'>
-          <TERipple rippleColor="light">
-            <button
-              type="button"
-              className="add-btns inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out hover:bg-primary-600 focus:outline-none"
-              style={{padding:'20px 45px'}}
-            >
-              <Link to='/add-tendor' style={{fontSize:'2rem'}} >
-              +</Link>
-            </button>
-          </TERipple>
-          <p className='header' style={{background:'none',color:'black',fontSize:'1.5rem'}} >Add New Tendors</p>
-        </div>}
+    <div className={darkMode ? "dark" : ""}>
+      <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+        <Header />
 
-        <div className='all-tendors shared-post' style={{maxWidth:'100%'}}>
-          <div className='card'>
-          <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-2 pb-4 relative tendor-header">
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">Ongoing Tendors</span>
-        <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></span>
-        </h1>           
-    <div className="tendor-container">
-      {tendors.length===0 ? (<div style={{display:'flex',justifyContent:'center',alignItems:'center' ,width:'100%'}}>
-          <span style={{fontSize:'1.5rem'}}>No Tendor to Show</span>
-          </div>) :
-    tendors.map((card, index) => {
-        const closesOnDate = new Date(card?.closesOn);
-        return closesOnDate >= currentDate && card?.active ? (
-          <CardDefault
-            key={index}
-            card={card}
-            refreshTendors={getTendors}
-            active={true}
+        <main className="flex-grow container mx-auto px-4 py-8">
+          {/* Admin-only: Add Tenders */}
+          {user?.isAdmin && (
+            <div className="flex justify-center mb-8">
+              <Link
+                to="/add-tendor"
+                className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg text-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600"
+              >
+                <FaPlus /> Add New Tender
+              </Link>
+            </div>
+          )}
 
-          />
-        ) : null ;
-      })}
+          {/* Tenders Section */}
+          <section className="space-y-16">
+            {/* Ongoing Tenders */}
+            <div>
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
+                Ongoing Tenders
+              </h2>
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {tenders.length === 0 ? (
+                  <p className="col-span-full text-center text-lg">
+                    No ongoing tenders available.
+                  </p>
+                ) : (
+                  tenders.map((tender, index) => {
+                    const closesOnDate = new Date(tender?.closesOn);
+                    return (
+                      closesOnDate >= currentDate &&
+                      tender?.active && (
+                        <CardDefault
+                          key={index}
+                          card={tender}
+                          refreshTenders={fetchTenders}
+                          active={true}
+                        />
+                      )
+                    );
+                  })
+                )}
+              </div>
             </div>
-          </div>
-          <div className='card'>
-          <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-2 pb-4 relative tendor-header">
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">Completed Tendors</span>
-        <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></span>
-    </h1>  
-                <div className="tendor-container">
-                  {tendors.length===0 ? (<div style={{display:'flex',justifyContent:'center',alignItems:'center' ,width:'100%'}}>
-          <span style={{fontSize:'1.5rem'}}>No Tendor to Show</span>
-          </div>):
-                tendors.map((card, index) => {
-        const closesOnDate = new Date(card?.closesOn);
-        return closesOnDate < currentDate && card?.active===false ? (
-          <CardDefault
-            key={index}
-            card={card}
-            refreshTendors={getTendors}
-            active={user?.isAdmin ? false : true}
-          />
-        ) : null
-      })}
+
+            {/* Completed Tenders */}
+            <div>
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500">
+                Completed Tenders
+              </h2>
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {tenders.length === 0 ? (
+                  <p className="col-span-full text-center text-lg">
+                    No completed tenders available.
+                  </p>
+                ) : (
+                  tenders.map((tender, index) => {
+                    const closesOnDate = new Date(tender?.closesOn);
+                    return (
+                      closesOnDate < currentDate &&
+                      !tender?.active && (
+                        <CardDefault
+                          key={index}
+                          card={tender}
+                          refreshTenders={fetchTenders}
+                          active={user?.isAdmin ? false : true}
+                        />
+                      )
+                    );
+                  })
+                )}
+              </div>
             </div>
-          </div>
+          </section>
+        </main>
+
+        <Footer />
+
+        {/* Dark Mode Toggle */}
+        <div className="fixed bottom-6 right-6">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-4 bg-gray-300 dark:bg-gray-700 rounded-full shadow-lg hover:bg-gray-400 dark:hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+          >
+            {darkMode ? (
+              <span
+                role="img"
+                aria-label="Light Mode"
+                className="text-yellow-400 text-lg"
+              >
+                ☀️
+              </span>
+            ) : (
+              <span
+                role="img"
+                aria-label="Dark Mode"
+                className="text-gray-900 text-lg"
+              >
+                🌙
+              </span>
+            )}
+          </button>
         </div>
       </div>
-      <Footer/>
     </div>
-
   );
 };
 

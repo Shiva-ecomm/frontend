@@ -1,11 +1,12 @@
-import { message } from 'antd';
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import host from '../APIRoute/host';
-import FormatDate from '../helpers/FormatDate';
-import '../styles/CardDefault.css';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AiOutlineCloseCircle, AiOutlineInfoCircle } from "react-icons/ai";
+import { BsCalendarEvent, BsBoxSeam } from "react-icons/bs";
+import { message } from "antd";
+import axios from "axios";
+import host from "../APIRoute/host";
+import FormatDate from "../helpers/FormatDate";
 
 const CardDefault = ({ card, refreshTendors, active }) => {
   const { user } = useSelector((state) => state.user);
@@ -21,80 +22,80 @@ const CardDefault = ({ card, refreshTendors, active }) => {
 
   const closeTendor = async () => {
     try {
-      const res = await axios.post(`${host}/tendor/change-state/${card?._id}`, {}, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+      const res = await axios.post(
+        `${host}/tendor/change-state/${card?._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      });
+      );
       if (res.data.success) {
-        message.success('Closed tendor successfully');
+        message.success("Tender closed successfully.");
         refreshTendors();
       }
     } catch (error) {
-      // console.log(error.message);
-      message.error('Something went wrong');
+      message.error("Something went wrong.");
     }
   };
 
-  useEffect(() => {
-    // Any necessary effect logic can go here
-  }, [closeTendor]);
-
   return (
-    <div className="rounded overflow-hidden shadow-lg"
-      style={{ width: '95%', height: 'fit-content', boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2" onClick={() => handleClick(card?._id)}>{card?.title}</div>
-        <p className="text-gray-700 text-base" onClick={() => handleClick(card?._id)}>
-          {card?.description}
-        </p>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out p-4">
+      {/* Title */}
+      <div
+        className="cursor-pointer text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2 hover:underline"
+        onClick={() => handleClick(card?._id)}
+      >
+        {card?.title}
       </div>
-      <div className="px-4 pt-4 pb-2" style={{display:'flex'}}>
-        <span
-          className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          onClick={() => handleClick(card?._id)}
-        >
+
+      {/* Description */}
+      <p
+        className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 cursor-pointer"
+        onClick={() => handleClick(card?._id)}
+      >
+        {card?.description}
+      </p>
+
+      {/* Details */}
+      <div className="space-y-2">
+        <div className="flex items-center text-sm text-gray-700 dark:text-gray-400">
+          <BsBoxSeam className="mr-2 text-blue-500" />
           Quantity: {card?.qty?.$numberDecimal || card?.qty}
-        </span>
-
-        <span
-          className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          onClick={() => handleClick(card?._id)}
-        >
+        </div>
+        <div className="flex items-center text-sm text-gray-700 dark:text-gray-400">
+          <BsCalendarEvent className="mr-2 text-green-500" />
           Created On: {FormatDate(card?.createdOn)}
-        </span>
-
-        <span
-          className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          onClick={() => handleClick(card?._id)}
-        >
+        </div>
+        <div className="flex items-center text-sm text-gray-700 dark:text-gray-400">
+          <BsCalendarEvent className="mr-2 text-red-500" />
           Closes On: {FormatDate(card?.closesOn)}
-        </span>
-
-        {user?.isAdmin && (
-          <div className="button-section">
-            {card?.active ? (
-              <button
-                type="button"
-                style={{ fontSize: '0.7rem', width: '120px', height: '40px' }}
-                className="add-btn inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_-4px_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                onClick={closeTendor}
-              >
-                Close Tendor
-              </button>
-            ) : (
-              <button
-                type="button"
-                style={{ fontSize: '0.7rem', width: '120px', height: '40px' }}
-                className="add-btn inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                onClick={() => handleClick(card?._id)}
-              >
-                See Details
-              </button>
-            )}
-          </div>
-        )}
+        </div>
       </div>
+
+      {/* Admin Controls */}
+      {user?.isAdmin && (
+        <div className="mt-4 flex justify-between items-center">
+          {card?.active ? (
+            <button
+              className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 focus:ring focus:ring-red-500 focus:ring-opacity-50 dark:bg-red-500 dark:hover:bg-red-600"
+              onClick={closeTendor}
+            >
+              <AiOutlineCloseCircle />
+              Close Tender
+            </button>
+          ) : (
+            <button
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:bg-blue-500 dark:hover:bg-blue-600"
+              onClick={() => handleClick(card?._id)}
+            >
+              <AiOutlineInfoCircle />
+              See Details
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

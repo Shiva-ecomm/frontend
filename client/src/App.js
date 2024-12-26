@@ -15,6 +15,8 @@ import ProfilePage from './pages/ProfilePage';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import TendorInfo from './pages/TendorInfo';
+import PrintTendorDetails from './pages/PrintTendorDetails';
+import TendorResult from './pages/TendorResult';
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<ProtectedRoutes><Home /></ProtectedRoutes> } />
+        <Route path="/print/:id" element={<ProtectedRoutes><PrintTendorDetails /></ProtectedRoutes> } />
         <Route path="/add-tendor" element={<AddPost />} />
         <Route path="/add-party" element={
           <ProtectedRoutes><AddParty /></ProtectedRoutes>  } />
@@ -34,6 +37,7 @@ function App() {
         <Route path="/profile/:id" element={<ProfilePage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:id" element={<ResetPassword />} />
+        <Route path="/tendor-result/:id" element={<TendorResult />} />
       </Routes>
     </BrowserRouter>
   );

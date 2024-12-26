@@ -153,66 +153,75 @@ const ManageUsers = () => {
             ) : (
               // Table component
               <div className="flex flex-col table-container">
-                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                  <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                    <div className="overflow-hidden">
-                      <table className="min-w-full text-left text-sm font-light">
-                        <thead className="border-b font-medium dark:border-neutral-500">
-                          <tr>
-                            <th scope="col" className="px-6 py-4">Name</th>
-                            <th scope="col" className="px-6 py-4">Email</th>
-                            <th scope="col" className="px-6 py-4">Mobile</th>
-                            <th scope="col" className="px-6 py-4">Change Admin</th>
-                            <th scope="col" className="px-6 py-4">Delete</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {filteredUser?.map((item) => (
-                            item?._id !== user?._id && (
-                              <tr
-                                key={item?._id}
-                                className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
-                              >
-                                <td className="whitespace-nowrap px-6 py-4 font-medium">{item?.name}</td>
-                                <td className="whitespace-nowrap px-6 py-4">{item?.email}</td>
-                                <td className="whitespace-nowrap px-6 py-4">{item?.phone}</td>
-                                <td className="whitespace-nowrap px-6 py-4">
-                                  <button
-                                    type="button"
-                                    style={{ fontSize: '0.7rem' }}
-                                    onClick={() => {
-                                      setCurrentUserId(item._id);
-                                      setActionType('changeAdmin');
-                                      setIsConfirm(true);
-                                    }}
-                                    className="add-btn inline-block rounded bg-gray-400 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                                  >
-                                    {item.isAdmin ? 'Remove Admin' : 'Make Admin'}
-                                  </button>
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4">
-                                  <button
-                                    type="button"
-                                    style={{ fontSize: '0.7rem' }}
-                                    onClick={() => {
-                                      setCurrentUserId(item._id);
-                                      setActionType('delete');
-                                      setIsConfirm(true);
-                                    }}
-                                    className="add-btn inline-block rounded bg-gray-400 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                                  >
-                                    Delete
-                                  </button>
-                                </td>
-                              </tr>
-                            )
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+  <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+      {/* Add a fixed height and enable vertical scrolling */}
+      <div className="overflow-y-auto max-h-[400px] border border-gray-300 rounded-md">
+        <table className="min-w-full text-left text-sm font-light">
+          <thead className="border-b font-medium dark:border-neutral-500">
+            <tr>
+              <th scope="col" className="px-6 py-4">Name</th>
+              <th scope="col" className="px-6 py-4">Email</th>
+              <th scope="col" className="px-6 py-4">Mobile</th>
+              <th scope="col" className="px-6 py-4">Change Admin</th>
+              <th scope="col" className="px-6 py-4">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUser?.map(
+              (item) =>
+                item?._id !== user?._id && (
+                  <tr
+                    key={item?._id}
+                    className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
+                  >
+                    <td className="whitespace-nowrap px-6 py-4 font-medium">
+                      {item?.name}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      {item?.email}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      {item?.phone}
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <button
+                        type="button"
+                        style={{ fontSize: '0.7rem' }}
+                        onClick={() => {
+                          setCurrentUserId(item._id);
+                          setActionType('changeAdmin');
+                          setIsConfirm(true);
+                        }}
+                        className="add-btn inline-block rounded bg-gray-400 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                      >
+                        {item.isAdmin ? 'Remove Admin' : 'Make Admin'}
+                      </button>
+                    </td>
+                    <td className="whitespace-nowrap px-6 py-4">
+                      <button
+                        type="button"
+                        style={{ fontSize: '0.7rem' }}
+                        onClick={() => {
+                          setCurrentUserId(item._id);
+                          setActionType('delete');
+                          setIsConfirm(true);
+                        }}
+                        className="add-btn inline-block rounded bg-gray-400 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                )
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
             )}
           </div>
         )}

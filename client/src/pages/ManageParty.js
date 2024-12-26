@@ -159,51 +159,53 @@ const ManageParty = () => {
           </div>
         </div>
 
-        <div className="flex flex-col table-container overflow-x-auto sm:-mx-4 lg:-mx-6">
-          <div className="inline-block min-w-full py-2 sm:px-4 lg:px-6">
-            <div className="overflow-hidden">
-              <table className="min-w-full text-left text-sm font-light table-auto dark:text-white">
-                <thead className="border-b font-medium dark:border-neutral-500">
-                  <tr>
-                    <th className="px-4 py-2 text-gray-900 dark:text-white">Company Name</th>
-                    <th className="px-4 py-2 text-gray-900 dark:text-white">Person Name</th>
-                    <th className="px-4 py-2 text-gray-900 dark:text-white">Email</th>
-                    <th className="px-4 py-2 text-gray-900 dark:text-white">Mobile</th>
-                    <th className="px-4 py-2 text-gray-900 dark:text-white">City</th>
-                    <th className="px-4 py-2 text-gray-900 dark:text-white">Edit</th>
-                    <th className="px-4 py-2 text-gray-900 dark:text-white">Delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filterParties?.map((item) => (
-                    <tr
-                      key={item?._id}
-                      className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
-                    >
-                      <td className="whitespace-nowrap px-4 py-2 text-ellipsis overflow-hidden">{item?.companyName}</td>
-                      <td className="whitespace-nowrap px-4 py-2 text-ellipsis overflow-hidden">{item?.name}</td>
-                      <td className="whitespace-nowrap px-4 py-2 text-ellipsis overflow-hidden">{item?.email}</td>
-                      <td className="whitespace-nowrap px-4 py-2">{item?.phone}</td>
-                      <td className="whitespace-nowrap px-4 py-2">{item?.city}</td>
-                      <td className="whitespace-nowrap px-4 py-2">
-                        <FaEdit
-                          className="cursor-pointer text-blue-500 hover:text-blue-700"
-                          onClick={() => { handleClick(); setId(item?._id); }}
-                        />
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-2">
-                        <FaTrash
-                          className="cursor-pointer text-red-500 hover:text-red-700"
-                          onClick={() => { setIsConfirm(true); setId(item?._id); }}
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <div className="flex flex-col table-container">
+  <div className="inline-block min-w-full py-2 sm:px-4 lg:px-6">
+    {/* Add a fixed height to the container and enable vertical scrolling */}
+    <div className="overflow-y-auto max-h-[400px] border border-gray-300 rounded-md">
+      <table className="min-w-full text-left text-sm font-light table-auto dark:text-white">
+        <thead className="border-b font-medium dark:border-neutral-500">
+          <tr>
+            <th className="px-2 py-2 text-gray-900 dark:text-white">Company Name</th>
+            <th className="px-2 py-2 text-gray-900 dark:text-white">Person Name</th>
+            <th className="px-2 py-2 text-gray-900 dark:text-white">Email</th>
+            <th className="px-2 py-2 text-gray-900 dark:text-white">Mobile</th>
+            <th className="px-2 py-2 text-gray-900 dark:text-white">City</th>
+            <th className="px-2 py-2 text-gray-900 dark:text-white">Edit</th>
+            <th className="px-2 py-2 text-gray-900 dark:text-white">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filterParties?.map((item) => (
+            <tr
+              key={item?._id}
+              className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
+            >
+              <td className="whitespace-nowrap px-2 py-2 text-ellipsis overflow-hidden">{item?.companyName}</td>
+              <td className="whitespace-nowrap px-2 py-2 text-ellipsis overflow-hidden">{item?.name}</td>
+              <td className="whitespace-nowrap px-2 py-2 text-ellipsis overflow-hidden">{item?.email}</td>
+              <td className="whitespace-nowrap px-2 py-2">{item?.phone}</td>
+              <td className="whitespace-nowrap px-2 py-2">{item?.city}</td>
+              <td className="whitespace-nowrap px-2 py-2">
+                <FaEdit
+                  className="cursor-pointer text-blue-500 hover:text-blue-700"
+                  onClick={() => { handleClick(); setId(item?._id); }}
+                />
+              </td>
+              <td className="whitespace-nowrap px-4 py-2">
+                <FaTrash
+                  className="cursor-pointer text-red-500 hover:text-red-700"
+                  onClick={() => { setIsConfirm(true); setId(item?._id); }}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
       </div>
     )}
   </div>

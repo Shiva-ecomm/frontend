@@ -308,7 +308,7 @@ const AddPost = () => {
           </div>
 
           {/* Party List Table */}
-          <div className="overflow-x-auto mt-6">
+          <div className="overflow-x-auto max-h-80 mt-6">
             <table className="min-w-full bg-white text-gray-700 border rounded-md shadow-md dark:bg-gray-900">
               <thead className="bg-gray-100 dark:text-white dark:bg-gray-600">
                 <tr>
@@ -343,7 +343,7 @@ const AddPost = () => {
 
           {/* Selected Parties Table */}
           {selectedParties.length > 0 && (
-            <div className="overflow-x-auto mt-6">
+            <div className="overflow-x-auto max-h-80  mt-6">
               <h2 className="text-lg font-bold dark:text-white">Selected Parties:</h2>
               <table className="min-w-full bg-white text-gray-700 border rounded-md shadow-md mt-4 dark:bg-gray-900 rounded-lg shadow-lg">
                 <thead className="bg-gray-100 dark:bg-gray-600">
